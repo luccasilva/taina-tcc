@@ -172,6 +172,31 @@ const dataSources = [
     csvPath: () => import('./data/medina_ruinas/medina_ruinas.csv?raw'),
     imageFolder: './data/medina_ruinas',
     category: 'ruinas'
+  },
+  // Comercinho data sources
+  {
+    name: 'comercinho_total',
+    csvPath: () => import('./data/comercinho_total/comercinho_total.csv?raw'),
+    imageFolder: './data/comercinho_total',
+    category: 'total'
+  },
+  {
+    name: 'comercinho_duvida',
+    csvPath: () => import('./data/comercinho_duvida/comercinho_duvida.csv?raw'),
+    imageFolder: './data/comercinho_duvida',
+    category: 'duvida'
+  },
+  {
+    name: 'comercinho_parcial',
+    csvPath: () => import('./data/comercinho_parcial/comercinho_parcial.csv?raw'),
+    imageFolder: './data/comercinho_parcial',
+    category: 'parcial'
+  },
+  {
+    name: 'comercinho_ruinas',
+    csvPath: () => import('./data/comercinho_ruinas/comercinho_ruinas.csv?raw'),
+    imageFolder: './data/comercinho_ruinas',
+    category: 'ruinas'
   }
 ]
 
@@ -236,26 +261,8 @@ const getImagePath = (folderName, photoName) => {
 // Component to log map position and zoom
 function MapLogger() {
   useMapEvents({
-    moveend: (e) => {
-      const map = e.target
-      const center = map.getCenter()
-      const zoom = map.getZoom()
-      console.log('📍 Map Position:', {
-        center: [center.lat, center.lng],
-        zoom: zoom,
-        formatted: `center={[${center.lat.toFixed(6)}, ${center.lng.toFixed(6)}]} zoom={${zoom}}`
-      })
-    },
-    zoomend: (e) => {
-      const map = e.target
-      const center = map.getCenter()
-      const zoom = map.getZoom()
-      console.log('🔍 Map Zoom:', {
-        center: [center.lat, center.lng],
-        zoom: zoom,
-        formatted: `center={[${center.lat.toFixed(6)}, ${center.lng.toFixed(6)}]} zoom={${zoom}}`
-      })
-    }
+    moveend: () => {},
+    zoomend: () => {}
   })
   return null
 }
@@ -305,8 +312,6 @@ function App() {
                     folder: source.imageFolder
                   }))
                   
-                  console.log(`✓ Loaded ${transformedData.length} markers from ${source.name}`)
-                  
                   resolve({
                     source: source.name,
                     data: transformedData
@@ -347,8 +352,6 @@ function App() {
       })
       
       setAllData(loadedData)
-      const totalMarkers = loadedData.reduce((sum, source) => sum + source.data.length, 0)
-      console.log(`✓ Loaded ${totalMarkers} total markers from ${loadedData.length} data sources`)
     }
     
     loadAllData()
@@ -363,31 +366,12 @@ function App() {
       }))
     )
     
-    // Debug: log marker counts by source
-    if (markers.length > 0) {
-      const countsBySource = {}
-      markers.forEach(m => {
-        countsBySource[m.source] = (countsBySource[m.source] || 0) + 1
-      })
-      console.log('Marker counts by source:', countsBySource)
-    }
-    
     return markers
   }
 
-  // Calculate center of all markers
-  const getCenter = () => {
-    const allMarkers = getAllMarkers()
-    if (allMarkers.length === 0) return [-15.747, -41.462]
-    
-    const lats = allMarkers.map(item => parseFloat(item.Y)) // Y is latitude
-    const lngs = allMarkers.map(item => parseFloat(item.X)) // X is longitude
-    
-    const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2
-    const centerLng = (Math.min(...lngs) + Math.max(...lngs)) / 2
-    
-    return [centerLat, centerLng]
-  }
+  // Default initial map center and zoom
+  const defaultMapCenter = [-15.970749238323208, -41.37616932392121]
+  const defaultMapZoom = 11
 
   const goToAguasVermelhas = () => {
     setSelectedMunicipio('aguas_vermelhas')
@@ -437,6 +421,14 @@ function App() {
     })
   }
 
+  const goToComercinho = () => {
+    setSelectedMunicipio('comercinho')
+    setMapView({
+      center: [-16.29722075378317, -41.79539322853089],
+      zoom: 16
+    })
+  }
+
   return (
     <div className="app-container">
       <div className="title-section">
@@ -481,26 +473,40 @@ function App() {
           >
             Medina
           </button>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'comercinho' ? 'selected' : ''}`}
+            onClick={goToComercinho}
+          >
+            Comercinho
+          </button>
         </div>
       </div>
       {getAllMarkers().length > 0 ? (
         <div className="map-container">
           <div className="map-legend">
-            {Object.entries(categoryColors).map(([category, color]) => (
-              <div key={category} className="legend-item">
-                <div 
-                  className="legend-color" 
-                  style={{ backgroundColor: color }}
-                ></div>
-                <span className="legend-label">
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </span>
-              </div>
-            ))}
+            {Object.entries(categoryColors).map(([category, color]) => {
+              const categoryLabels = {
+                total: 'Total',
+                duvida: 'Dúvida',
+                parcial: 'Parcial',
+                ruinas: 'Ruínas'
+              }
+              return (
+                <div key={category} className="legend-item">
+                  <div 
+                    className="legend-color" 
+                    style={{ backgroundColor: color }}
+                  ></div>
+                  <span className="legend-label">
+                    {categoryLabels[category] || category.charAt(0).toUpperCase() + category.slice(1)}
+                  </span>
+                </div>
+              )
+            })}
           </div>
           <MapContainer
-            center={getCenter()}
-            zoom={13}
+            center={defaultMapCenter}
+            zoom={defaultMapZoom}
             style={{ height: '100%', width: '100%' }}
           >
             <MapLogger />
