@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Data directory
-src/data/
+# src/data/

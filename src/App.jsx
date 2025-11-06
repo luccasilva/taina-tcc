@@ -15,10 +15,10 @@ L.Icon.Default.mergeOptions({
 
 // Color mapping for categories (shared across counties)
 const categoryColors = {
-  total: '#3388ff',    // Blue
-  duvida: '#ff6b6b',   // Red
-  parcial: '#ffd93d', // Yellow
-  ruinas: '#95e1d3'    // Teal
+  total: '#0288d1',    // Blue
+  duvida: '#7ca942',   // Green
+  parcial: '#fbc02d',  // Yellow
+  ruinas: '#9c27b0'    // Purple
 }
 
 // Define data sources - each folder contains CSV and photos
@@ -71,6 +71,106 @@ const dataSources = [
     name: 'pajeu_ruinas',
     csvPath: () => import('./data/pajeu_ruinas/pajeu_ruinas.csv?raw'),
     imageFolder: './data/pajeu_ruinas',
+    category: 'ruinas'
+  },
+  // Pedra Azul data sources
+  {
+    name: 'pedra_azul_total',
+    csvPath: () => import('./data/pedra_azul_total/pedra_azul_total.csv?raw'),
+    imageFolder: './data/pedra_azul_total',
+    category: 'total'
+  },
+  {
+    name: 'pedra_azul_duvida',
+    csvPath: () => import('./data/pedra_azul_duvida/pedra_azul_duvida.csv?raw'),
+    imageFolder: './data/pedra_azul_duvida',
+    category: 'duvida'
+  },
+  {
+    name: 'pedra_azul_parcial',
+    csvPath: () => import('./data/pedra_azul_parcial/pedra_azul_parcial.csv?raw'),
+    imageFolder: './data/pedra_azul_parcial',
+    category: 'parcial'
+  },
+  {
+    name: 'pedra_azul_ruinas',
+    csvPath: () => import('./data/pedra_azul_ruinas/pedra_azul_ruinas.csv?raw'),
+    imageFolder: './data/pedra_azul_ruinas',
+    category: 'ruinas'
+  },
+  // Divisópolis data sources
+  {
+    name: 'divisopolis_total',
+    csvPath: () => import('./data/divisopolis_total/divisopolis_total.csv?raw'),
+    imageFolder: './data/divisopolis_total',
+    category: 'total'
+  },
+  {
+    name: 'divisopolis_duvida',
+    csvPath: () => import('./data/divisopolis_duvida/divisopolis_duvida.csv?raw'),
+    imageFolder: './data/divisopolis_duvida',
+    category: 'duvida'
+  },
+  {
+    name: 'divisopolis_parcial',
+    csvPath: () => import('./data/divisopolis_parcial/divisopolis_parcial.csv?raw'),
+    imageFolder: './data/divisopolis_parcial',
+    category: 'parcial'
+  },
+  {
+    name: 'divisopolis_ruinas',
+    csvPath: () => import('./data/divisopolis_ruinas/divisopolis_ruinas.csv?raw'),
+    imageFolder: './data/divisopolis_ruinas',
+    category: 'ruinas'
+  },
+  // Divisão Alegre data sources
+  {
+    name: 'divisa_alegre_total',
+    csvPath: () => import('./data/divisa_alegre_total/divisa_alegre_total.csv?raw'),
+    imageFolder: './data/divisa_alegre_total',
+    category: 'total'
+  },
+  {
+    name: 'divisa_alegre_duvida',
+    csvPath: () => import('./data/divisa_alegre_duvida/divisa_alegre_duvida.csv?raw'),
+    imageFolder: './data/divisa_alegre_duvida',
+    category: 'duvida'
+  },
+  {
+    name: 'divisa_alegre_parcial',
+    csvPath: () => import('./data/divisa_alegre_parcial/divisa_alegre_parcial.csv?raw'),
+    imageFolder: './data/divisa_alegre_parcial',
+    category: 'parcial'
+  },
+  {
+    name: 'divisa_alegre_ruinas',
+    csvPath: () => import('./data/divisa_alegre_ruinas/divisa_alegre_ruinas.csv?raw'),
+    imageFolder: './data/divisa_alegre_ruinas',
+    category: 'ruinas'
+  },
+  // Medina data sources
+  {
+    name: 'medina_total',
+    csvPath: () => import('./data/medina_total/medina_total.csv?raw'),
+    imageFolder: './data/medina_total',
+    category: 'total'
+  },
+  {
+    name: 'medina_duvida',
+    csvPath: () => import('./data/medina_duvida/medina_duvida.csv?raw'),
+    imageFolder: './data/medina_duvida',
+    category: 'duvida'
+  },
+  {
+    name: 'medina_parcial',
+    csvPath: () => import('./data/medina_parcial/medina_parcial.csv?raw'),
+    imageFolder: './data/medina_parcial',
+    category: 'parcial'
+  },
+  {
+    name: 'medina_ruinas',
+    csvPath: () => import('./data/medina_ruinas/medina_ruinas.csv?raw'),
+    imageFolder: './data/medina_ruinas',
     category: 'ruinas'
   }
 ]
@@ -177,6 +277,7 @@ function App() {
   const [allData, setAllData] = useState([]) // Array of {source, data}
   const [selectedPhoto, setSelectedPhoto] = useState(null)
   const [mapView, setMapView] = useState(null)
+  const [selectedMunicipio, setSelectedMunicipio] = useState(null)
 
   useEffect(() => {
     // Load all CSV files from all data sources
@@ -289,6 +390,7 @@ function App() {
   }
 
   const goToAguasVermelhas = () => {
+    setSelectedMunicipio('aguas_vermelhas')
     setMapView({
       center: [-15.747276984466714, -41.462284326553345],
       zoom: 16
@@ -296,22 +398,88 @@ function App() {
   }
 
   const goToCachoeirasDePajeu = () => {
+    setSelectedMunicipio('pajeu')
     setMapView({
       center: [-15.967002368268744, -41.497163772583015],
       zoom: 16
     })
   }
 
+  const goToPedraAzul = () => {
+    setSelectedMunicipio('pedra_azul')
+    setMapView({
+      center: [-16.000729316063108, -41.27851009368897],
+      zoom: 15
+    })
+  }
+
+  const goToDivisopolis = () => {
+    setSelectedMunicipio('divisopolis')
+    setMapView({
+      center: [-15.721832530767715, -41.002779006958015],
+      zoom: 15
+    })
+  }
+
+  const goToDivisaAlegre = () => {
+    setSelectedMunicipio('divisa_alegre')
+    setMapView({
+      center: [-15.719519167724359, -41.34444952011109],
+      zoom: 15
+    })
+  }
+
+  const goToMedina = () => {
+    setSelectedMunicipio('medina')
+    setMapView({
+      center: [-16.225450255119004, -41.477926969528205],
+      zoom: 16
+    })
+  }
+
   return (
     <div className="app-container">
+      <div className="title-section">
+        <h1 className="main-title">ARQUITETURA POPULAR BRASILEIRA: AS CONSTRUÇÕES COM TERRA NA REGIÃO IMEDIATA DE PEDRA AZUL</h1>
+      </div>
       <div className="municipios-section">
         <h2 className="municipios-title">Municípios</h2>
         <div className="navigation-buttons">
-          <button className="navigation-button" onClick={goToAguasVermelhas}>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'aguas_vermelhas' ? 'selected' : ''}`}
+            onClick={goToAguasVermelhas}
+          >
             Águas Vermelhas
           </button>
-          <button className="navigation-button" onClick={goToCachoeirasDePajeu}>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'pajeu' ? 'selected' : ''}`}
+            onClick={goToCachoeirasDePajeu}
+          >
             Cachoeiras de Pajeu
+          </button>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'pedra_azul' ? 'selected' : ''}`}
+            onClick={goToPedraAzul}
+          >
+            Pedra Azul
+          </button>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'divisopolis' ? 'selected' : ''}`}
+            onClick={goToDivisopolis}
+          >
+            Divisópolis
+          </button>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'divisa_alegre' ? 'selected' : ''}`}
+            onClick={goToDivisaAlegre}
+          >
+            Divisa Alegre
+          </button>
+          <button 
+            className={`navigation-button ${selectedMunicipio === 'medina' ? 'selected' : ''}`}
+            onClick={goToMedina}
+          >
+            Medina
           </button>
         </div>
       </div>
