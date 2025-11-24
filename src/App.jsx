@@ -555,9 +555,6 @@ function App() {
                 >
                   <Popup>
                     <div className="marker-popup">
-                      <p>Photo: {photoName}</p>
-                      <p>Source: {item.source}</p>
-                      <p>Coordinates: {lat.toFixed(6)}, {lng.toFixed(6)}</p>
                       <button onClick={() => setSelectedPhoto({
                         foto: photoName,
                         path: photoPath,
@@ -565,7 +562,7 @@ function App() {
                         lng,
                         source: item.source
                       })}>
-                        View Photo
+                        Ver Foto
                       </button>
                     </div>
                   </Popup>
@@ -588,7 +585,7 @@ function App() {
               className="photo-display"
             />
             <p className="photo-coords">
-              Location: {selectedPhoto.lat.toFixed(6)}, {selectedPhoto.lng.toFixed(6)}
+              Coordenadas: {selectedPhoto.lat.toFixed(6)}, {selectedPhoto.lng.toFixed(6)}
             </p>
           </div>
         </div>
