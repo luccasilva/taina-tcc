@@ -432,7 +432,13 @@ function App() {
   return (
     <div className="app-container">
       <div className="title-section">
-        <h1 className="main-title">ARQUITETURA POPULAR BRASILEIRA: AS CONSTRUÇÕES COM TERRA NA REGIÃO IMEDIATA DE PEDRA AZUL</h1>
+        <h1 className="main-title">ARQUITETURA POPULAR BRASILEIRA: REGISTROS DE CONSTRUÇÕES COM TERRA NA REGIÃO IMEDIATA DE PEDRA AZUL</h1>
+        <p className="description-text">
+          Este site reúne um acervo de registros georreferenciados de construções em terra na área urbana dos municípios da região imediata de Pedra Azul. O projeto faz parte de uma pesquisa de TCC e nasce da importância da arquitetura de terra numa das regiões menos desenvolvidas de Minas Gerais. Na região de Pedra Azul, as técnicas tradicionais de terra ainda fazem parte do cotidiano, mas permanecem pouco estudadas e pouco documentadas. Assim, o acervo busca contribuir com o registo e a valorização dessas práticas construtivas na região.
+        </p>
+        <p className="author-text">
+          Tainá Bandeira, Escola de Arquitetura e Urbanismo da UFMG.
+        </p>
       </div>
       <div className="municipios-section">
         <h2 className="municipios-title">Municípios</h2>

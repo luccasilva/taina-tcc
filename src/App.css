@@ -10,7 +10,7 @@
 
 .title-section {
   background: white;
-  padding: 1.5rem 2rem;
+  padding: 2rem 2.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 1rem;
@@ -18,12 +18,31 @@
 }
 
 .main-title {
-  margin: 0;
+  margin: 0 0 1.5rem 0;
   font-size: 1.5rem;
   font-weight: 700;
   color: #333;
   line-height: 1.4;
   letter-spacing: 0.3px;
+}
+
+.description-text {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+  text-align: justify;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.author-text {
+  margin: 1rem 0 0 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #666;
+  text-align: center;
 }
 
 .municipios-section {
